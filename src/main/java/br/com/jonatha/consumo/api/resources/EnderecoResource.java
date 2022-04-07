@@ -4,6 +4,7 @@ import br.com.jonatha.consumo.api.domain.Endereco;
 import br.com.jonatha.consumo.api.dto.CepDTO;
 import br.com.jonatha.consumo.api.services.CepService;
 import br.com.jonatha.consumo.api.services.EnderecoService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,7 @@ public class EnderecoResource {
     CepService cepService;
 
     //CREATE
+    @ApiOperation("Busca endereco por cep no body")
     @PostMapping()
     public ResponseEntity<Endereco> insert(@Valid @RequestBody CepDTO objDto) {
         Endereco obj = service.cepFromDto(objDto);
@@ -36,6 +38,7 @@ public class EnderecoResource {
     }
 
     //READ
+    @ApiOperation("Realiza busca no BD por id das consulta anteriores")
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable Integer id){
         Optional<Endereco> obj = service.findById(id);
@@ -45,16 +48,18 @@ public class EnderecoResource {
         return  ResponseEntity.ok().body(obj.get());
     }
     //READ ALL
+    @ApiOperation("Realiza busca no BD de todas consulta anteriores")
     @GetMapping()
     public ResponseEntity<List<Endereco>> findAll (){
-        List<Endereco> list = new ArrayList<>();
-        list = service.findAll();
-        return ResponseEntity.ok().body(list);
+        List<Endereco> lista = new ArrayList<>();
+        lista = service.findAll();
+        return ResponseEntity.ok().body(lista);
     }
 
     //UPDATE
 
     //DELETE
+    @ApiOperation("Exclui consulta por id no BDlo")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Integer id){
         Optional<Endereco> obj = service.findById(id);
